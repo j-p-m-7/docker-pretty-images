@@ -27,6 +27,10 @@ def run_cli():
     # Apply ANSI colors to image names
     images = apply_colors_to_images(images)
 
+    # Check usage for each image
+    for img in images:
+        img["in_use"] = is_image_in_use(img["ID"])
+
     # Print output
     print_images(images, slim=args.slim)
 
@@ -50,6 +54,15 @@ def get_docker_images():
     return [json.loads(line) for line in result.stdout.strip().splitlines()]
 
 
+def is_image_in_use(image_id):
+    result = subprocess.run(
+        ["docker", "ps", "-a", "--filter", f"ancestor={image_id}", "--format", "{{.ID}}"],
+        capture_output=True,
+        text=True
+    )
+    return bool(result.stdout.strip())
+
+
 def apply_colors_to_images(images):
     colors = [
         '\033[94m',  # blue
@@ -67,7 +80,7 @@ def apply_colors_to_images(images):
 def print_images(images, slim=False):
     print("\nAll docker images")
     for img in images:
-        print("") # spacing
+        print("")  # spacing
         colored_name = f"{img['color']}{BOLD}{img['Repository']}:{img['Tag']}{ENDC}"
         if slim:
             print(colored_name)
@@ -76,7 +89,12 @@ def print_images(images, slim=False):
             print_line("Image ID", img["ID"])
             print_line("Created", img["CreatedSince"])
             print_line("Size", img["Size"])
+            if img["in_use"]:
+                print_line("State", f"{GREEN}[In Use]{ENDC}")
+            else:
+                print_line("State", f"{RED}[Not Used]{ENDC}")
     print(f"\nTotal images:\t{len(images)}")
+
 
 
 def print_line(label, value, width=24):
