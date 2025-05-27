@@ -76,7 +76,7 @@ def print_images(images, slim=False):
             print_line("Image ID", img["ID"])
             print_line("Created", img["CreatedSince"])
             print_line("Size", img["Size"])
-    print(f"\nTotal images:\t{len(images)}\n")
+    print(f"\nTotal images:\t{len(images)}")
 
 
 def print_line(label, value, width=24):
