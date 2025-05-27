@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+
+import dockerprettyimages
+
+dockerprettyimages.run_cli()
