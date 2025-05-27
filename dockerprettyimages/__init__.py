@@ -65,9 +65,9 @@ def apply_colors_to_images(images):
 
 
 def print_images(images, slim=False):
-    print("All docker images")
+    print("\nAll docker images")
     for img in images:
-        print("")
+        print("") # spacing
         colored_name = f"{img['color']}{BOLD}{img['Repository']}:{img['Tag']}{ENDC}"
         if slim:
             print(colored_name)
