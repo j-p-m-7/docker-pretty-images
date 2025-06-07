@@ -14,6 +14,15 @@ uv tool install git+https://github.com/j-p-m-7/docker-pretty-images
 ```
 
 
+### Sample usage
+
+```bash
+$ docker-pretty-images
+```
+
+<img src="https://raw.githubusercontent.com/j-p-m-7/whois-pretty/refs/heads/main/img.png" alt="Logo" width="600"/>
+
+
 ### Credits
 
 Inspired by [docker-pretty-ps](https://github.com/politeauthority/docker-pretty-ps/)
